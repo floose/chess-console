@@ -12,6 +12,7 @@ namespace chess_console
             {
                 for (int j = 0; j < board.Columns; j++)
                 {
+                    //if the piece is NULL prints a dashed line
                     if (board.GetPiece(i, j) == null)
                     {
                         Console.Write("- ");
@@ -23,6 +24,7 @@ namespace chess_console
                     }
 
                 }
+                Console.WriteLine(); //makes a new line at the console for another row
             }
         }
     }
