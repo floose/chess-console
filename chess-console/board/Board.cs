@@ -19,5 +19,11 @@
             _Pieces = new Piece[Rows, Columns];
         }
 
+        //get a certain piece at the board
+        public Piece GetPiece(int row, int column)
+        {
+            return _Pieces[row, column];
+        }
+
     }
 }
