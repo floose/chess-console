@@ -3,9 +3,16 @@ using board;
 using chess_console;
 using chess_console.board.Enums;
 using chess;
+using exceptions;
 
-Board board = new Board(8, 8);
-board.SetPiece(new Rook(Color.Black,board) , new Position(4, 4));
-board.SetPiece(new Knight(Color.Black, board), new Position(4, 4));
-
-Screen.PrintBoard(board);
+try
+{
+    Board board = new Board(8, 8);
+    board.SetPiece(new Rook(Color.Black, board), new Position(4, 4));
+    board.SetPiece(new Knight(Color.Black, board), new Position(4, 4));
+    Screen.PrintBoard(board);
+}
+catch(BoardException e)
+{
+    Console.WriteLine(e.Message);
+}
