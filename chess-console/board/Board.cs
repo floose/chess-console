@@ -45,6 +45,11 @@ namespace board
         //adds a Piece P to a given position of the board
         public void SetPiece(Piece piece, Position position)
         {
+            if(CheckPiece(position)) //if CheckPiece returns true, throws the exception
+            {
+                throw new BoardException("There is already a piece in this position.");
+            }
+
             _Pieces[position.Row, position.Column] = piece; 
             piece.Position = position; //updates piece position
         }
