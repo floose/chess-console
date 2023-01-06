@@ -1,11 +1,13 @@
 ﻿
 using board;
 using chess_console;
-using chess_console.board.Enums;
+using board.Enums;
 using chess;
 using exceptions;
 
-PositionChess pos = new PositionChess('b', 5);
+Board b = new Board(8, 8);
 
-Console.WriteLine(pos.ToString());  
-Console.WriteLine(pos.ToPosition().ToString());
+b.SetPiece(new Rook(Color.White, b), new Position(3, 5));
+b.SetPiece(new King(Color.Black,b), new Position(5, 5));
+
+Screen.PrintBoard(b);

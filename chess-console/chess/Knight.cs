@@ -1,5 +1,5 @@
 ﻿using board;
-using chess_console.board.Enums;
+using board.Enums;
 
 namespace chess
 {
