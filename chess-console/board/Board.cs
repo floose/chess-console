@@ -54,6 +54,24 @@ namespace board
             piece.Position = position; //updates piece position
         }
 
+        public Piece RemovePiece(Position position)
+        {
+            //if there is no piece, returns null
+            if(GetPiece(position) == null)
+            {
+                return null;
+            }
+
+            //gets the piece that was in the position
+            Piece aux = GetPiece(position);
+
+            //assigns null to existing piece position
+            this._Pieces[position.Row, position.Column] = null;
+            
+            //returns the removed piece
+            return aux;
+        }
+
         //method to check if a position is valid on the board
         public bool PositionIsValid(Position position)
         {
