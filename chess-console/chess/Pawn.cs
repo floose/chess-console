@@ -3,19 +3,19 @@ using chess_console.board.Enums;
 
 namespace chess
 {
-    internal class King : Piece 
+    internal class Pawn : Piece
     {
 
         //constructor gives the board and color to inherited attributes
-        public King(Color color, Board board) : base(color, board)
+        public Pawn(Color color, Board board) : base(color, board)
         {
-            
+
         }
 
-        //Override ToString for King. The Notation is "K"
+        
         public override string ToString()
         {
-            return "K";
+            return "P";
         }
     }
 }
