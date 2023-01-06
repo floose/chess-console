@@ -5,14 +5,12 @@ using board.Enums;
 using chess;
 using exceptions;
 
-Board b = new Board(8, 8);
+ChessMatch match = new ChessMatch();
 
-b.SetPiece(new Rook(Color.White, b), new Position(3, 5));
-Screen.PrintBoard(b);
+Screen.PrintBoard(match.getBoard());
+
+match.makeMove(new Position(0, 0), new Position(2, 3));
 
 Console.WriteLine();
 
-Piece aux = b.RemovePiece(new Position(3, 5));
-
-Console.WriteLine("Removed Piece is " + aux.ToString());
-Screen.PrintBoard(b);
+Screen.PrintBoard(match.getBoard());
