@@ -12,7 +12,7 @@ namespace chess
 
         }
 
-        //Override ToString for King. The Notation is "K"
+        
         public override string ToString()
         {
             return "R";
