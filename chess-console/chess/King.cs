@@ -28,16 +28,67 @@ namespace chess
 
         public override bool[,] PossibleMoves()
         {
+            //creates a matrix of possible moves
             bool[,] moveMatrix = new bool[this.Board.Rows, this.Board.Columns];
 
+            //defines a position
             Position position = new Position(0, 0);
 
-            //position above
+            //defines the rule for moving the king piece
+            /*
+             * this.Board.PositionIsValid - Check if the position is valid in the board
+             * _CanMove - check if there is no piece of the same color in the possible movements
+             */
+            //north
             position.SetPosition(this.Position.Row - 1, this.Position.Column);
             if(this.Board.PositionIsValid(position) && _CanMove(position))
             {
                 moveMatrix[position.Row, position.Column] = true;
             }
+            //northeast
+            position.SetPosition(this.Position.Row - 1, this.Position.Column + 1);
+            if (this.Board.PositionIsValid(position) && _CanMove(position))
+            {
+                moveMatrix[position.Row, position.Column] = true;
+            }
+            //east
+            position.SetPosition(this.Position.Row, this.Position.Column + 1);
+            if (this.Board.PositionIsValid(position) && _CanMove(position))
+            {
+                moveMatrix[position.Row, position.Column] = true;
+            }
+            //south-easth
+            position.SetPosition(this.Position.Row + 1, this.Position.Column + 1);
+            if (this.Board.PositionIsValid(position) && _CanMove(position))
+            {
+                moveMatrix[position.Row, position.Column] = true;
+            }
+            //south
+            position.SetPosition(this.Position.Row + 1, this.Position.Column);
+            if (this.Board.PositionIsValid(position) && _CanMove(position))
+            {
+                moveMatrix[position.Row, position.Column] = true;
+            }
+            //south-west
+            position.SetPosition(this.Position.Row + 1, this.Position.Column - 1);
+            if (this.Board.PositionIsValid(position) && _CanMove(position))
+            {
+                moveMatrix[position.Row, position.Column] = true;
+            }
+            //west
+            position.SetPosition(this.Position.Row, this.Position.Column - 1);
+            if (this.Board.PositionIsValid(position) && _CanMove(position))
+            {
+                moveMatrix[position.Row, position.Column] = true;
+            }
+            //north-west
+            position.SetPosition(this.Position.Row - 1, this.Position.Column - 1);
+            if (this.Board.PositionIsValid(position) && _CanMove(position))
+            {
+                moveMatrix[position.Row, position.Column] = true;
+            }
+            //returns the moveMatrix of possible moves
+            return moveMatrix;
         }
     }
 }
