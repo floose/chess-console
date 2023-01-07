@@ -9,7 +9,7 @@ try
 {
     ChessMatch match = new ChessMatch();
 
-    while(!match.MatchEnded)
+    while (!match.MatchEnded)
     {
         Console.Clear();
         //prints initial board
@@ -23,18 +23,19 @@ try
         bool[,] possibleMoves = match.Board.GetPiece(origin).PossibleMoves();
         Console.Clear();
         //prints the board again highlighting possibe moves with the aid of the bool matrix
-        Screen.PrintBoard(match.Board,possibleMoves);
+        Screen.PrintBoard(match.Board, possibleMoves);
 
         //writes the house of destination
         Console.Write("Destination: ");
         Position destination = Screen.ReadPosition().ToPosition();
-        
-        //invokes method that makes the move
-        match.makeMove(origin, destination); 
+        if (possibleMoves[destination.Row,destination.Column])
+        {
+            match.MakeMove(origin, destination);
+        }
     }
 
 }
-catch(BoardException exception)
+catch (BoardException exception)
 {
     Console.WriteLine(exception.Message);
 }

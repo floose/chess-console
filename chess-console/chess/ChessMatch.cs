@@ -20,9 +20,9 @@ namespace chess
             StartBoard();
         }
 
-        public void makeMove(Position origin, Position destination)
+        public void MakeMove(Position origin, Position destination)
         {
-            
+
             Piece piece = Board.RemovePiece(origin); //stores the piece of the origin position
             piece.IncrementNumberOfMoves();               //increments number of move of such piece
             Board.RemovePiece(destination);         //stores and removes the piece of destination
@@ -34,7 +34,7 @@ namespace chess
         private void StartBoard()
         {
             //White Pieces
-            Board.SetPiece(new Rook(Color.White, Board), new PositionChess('a',1).ToPosition());
+            Board.SetPiece(new Rook(Color.White, Board), new PositionChess('a', 1).ToPosition());
             Board.SetPiece(new Knight(Color.White, Board), new PositionChess('b', 1).ToPosition());
             Board.SetPiece(new Bishop(Color.White, Board), new PositionChess('c', 1).ToPosition());
             Board.SetPiece(new Queen(Color.White, Board), new PositionChess('d', 1).ToPosition());
