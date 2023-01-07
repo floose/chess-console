@@ -13,7 +13,7 @@ try
     {
         Console.Clear();
         Screen.PrintBoard(match.Board);
-
+        Console.WriteLine();
         Console.Write("Origin: ");
         Position origin = Screen.ReadPosition().ToPosition();
         Console.Write("Destination: ");
