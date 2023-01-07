@@ -11,32 +11,42 @@ try
 
     while (!match.MatchEnded)
     {
-        Console.Clear();
-        //prints initial board
-        Screen.PrintBoard(match.Board);
-        Console.WriteLine();
-        //Assigns the number of the turn
-        Console.WriteLine("Turn: " + match.Turn.ToString());
-        //Assigns the player
-        Console.WriteLine("Waiting play: " + match.ActualPlayer.ToString());
-
-        Console.Write("Origin: ");
-        //reads origin position from the console and transforms into generic position object
-        Position origin = Screen.ReadPosition().ToPosition();
-
-        //matrix of possible moves if a piece is in origin position
-        bool[,] possibleMoves = match.Board.GetPiece(origin).PossibleMoves();
-        Console.Clear();
-        //prints the board again highlighting possibe moves with the aid of the bool matrix
-        Screen.PrintBoard(match.Board, possibleMoves);
-
-        //writes the house of destination
-        Console.Write("Destination: ");
-        Position destination = Screen.ReadPosition().ToPosition();
-        if (possibleMoves[destination.Row, destination.Column])
+        try
         {
-            //assigns the play, moves the piece and changes the player who plays
-            match.MakePlay(origin, destination);
+            Console.Clear();
+            //prints initial board
+            Screen.PrintBoard(match.Board);
+            Console.WriteLine();
+            //Assigns the number of the turn
+            Console.WriteLine("Turn: " + match.Turn.ToString());
+            //Assigns the player
+            Console.WriteLine("Waiting play: " + match.ActualPlayer.ToString());
+
+            Console.Write("Origin: ");
+            //reads origin position from the console and transforms into generic position object
+            Position origin = Screen.ReadPosition().ToPosition();
+            match.ValidateOriginPosition(origin);//validates the chosen position
+
+            //matrix of possible moves if a piece is in origin position
+            bool[,] possibleMoves = match.Board.GetPiece(origin).PossibleMoves();
+            Console.Clear();
+            //prints the board again highlighting possibe moves with the aid of the bool matrix
+            Screen.PrintBoard(match.Board, possibleMoves);
+
+            //writes the house of destination
+            Console.Write("Destination: ");
+            Position destination = Screen.ReadPosition().ToPosition();
+            if (possibleMoves[destination.Row, destination.Column])
+            {
+                //assigns the play, moves the piece and changes the player who plays
+                match.MakePlay(origin, destination);
+            }
+        }
+        catch (BoardException e)
+        {
+            Console.WriteLine(e.Message);
+            Console.WriteLine("Press Enter to continue...");
+            Console.ReadLine();
         }
     }
 

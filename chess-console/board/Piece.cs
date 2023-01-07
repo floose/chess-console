@@ -23,6 +23,24 @@ namespace board
             NumberOfMoves++;
         }
 
+        public bool IsTherePossibleMoves()
+        {
+            //receives the possible moves matrix from the piece
+            bool[,] matrix = this.PossibleMoves();
+            //searches the matrix for the true squares;
+            for (int i = 0; i < this.Board.Rows; i++)
+            {
+                for (int j = 0; i < this.Board.Columns; i++)
+                {
+                    if (matrix[i, j])
+                    {
+                        return true;
+                    }
+                }
+            }
+            return false;
+        }
+
         /*
          * Method that moves a piece. It is abstract, so ChessPiece can implement it.
          * Since we don't know how a generic piece might move, we implement in this way.

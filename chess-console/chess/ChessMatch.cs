@@ -1,6 +1,7 @@
 ﻿using board;
 using board.Enums;
-using System.Runtime;
+using exceptions;
+using System.Net.Http.Headers;
 
 namespace chess
 {
@@ -30,6 +31,7 @@ namespace chess
             Board.SetPiece(piece, destination);    //sets the piece at origin to its destination
         }
 
+        //updated method to make a move of a piece, incrementing the turn and changing the player
         public void MakePlay(Position origin, Position destination)
         {
             MakeMove(origin, destination);
@@ -37,6 +39,24 @@ namespace chess
             _ChangePlayer();
         }
 
+        //validates the chosen square to move a piece
+        public void ValidateOriginPosition(Position position) 
+        { 
+            if(this.Board.GetPiece(position) == null) //throws exception if there is no piece
+            {
+                throw new BoardException("There is no piece at the chosen square.");
+            }
+            if(this.ActualPlayer != this.Board.GetPiece(position).Color) //throws exception if the piece if the enemy's
+            {
+                throw new BoardException("Can't move opponent's pieces!");
+            }
+            if(!this.Board.GetPiece(position).IsTherePossibleMoves()) //throws exception if the piece can't move
+            {
+                throw new BoardException("Can't move the piece. No possible moves.");
+            }
+        }
+
+        //changes the player who plays
         private void _ChangePlayer()
         {
             if(ActualPlayer == Color.White) 
