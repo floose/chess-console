@@ -17,5 +17,10 @@ namespace chess
         {
             return "P";
         }
+
+        public override bool[,] PossibleMoves()
+        {
+            return new bool[1, 1];
+        }
     }
 }

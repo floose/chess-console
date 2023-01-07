@@ -11,11 +11,14 @@ namespace chess
         {
 
         }
-
-
         public override string ToString()
         {
             return "B";
+        }
+
+        public override bool[,] PossibleMoves()
+        {
+            return new bool[1, 1];
         }
     }
 }
