@@ -7,8 +7,8 @@ namespace chess
     internal class ChessMatch
     {
         public Board Board { get; private set; }
-        private int Turn;
-        private Color ActualPlayer;
+        public int Turn { get; private set; }
+        public Color ActualPlayer { get; private set; }
         public bool MatchEnded { get; private set; }
 
         public ChessMatch()
@@ -28,6 +28,26 @@ namespace chess
             Board.RemovePiece(destination);         //stores and removes the piece of destination
             Piece capturedPiece = Board.RemovePiece(destination); //takes the piece from destination
             Board.SetPiece(piece, destination);    //sets the piece at origin to its destination
+        }
+
+        public void MakePlay(Position origin, Position destination)
+        {
+            MakeMove(origin, destination);
+            this.Turn++;
+            _ChangePlayer();
+        }
+
+        private void _ChangePlayer()
+        {
+            if(ActualPlayer == Color.White) 
+            {
+                this.ActualPlayer = Color.Black;
+            }
+            else
+            {
+                this.ActualPlayer = Color.White;
+            }
+
         }
 
         //puts the chess pieces into the board (manually)
