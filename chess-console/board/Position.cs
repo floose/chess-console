@@ -18,5 +18,11 @@
         {
             return Row + ", " + Column;
         }
+
+        public void SetPosition(int row, int column)
+        {
+            this.Row = row;
+            this.Column = column;
+        }
     }
 }
