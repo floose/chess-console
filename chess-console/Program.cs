@@ -8,7 +8,19 @@ using exceptions;
 try
 {
     ChessMatch match = new ChessMatch();
-    Screen.PrintBoard(match.Board);
+
+    while(!match.MatchEnded)
+    {
+        Console.Clear();
+        Screen.PrintBoard(match.Board);
+
+        Console.Write("Origin: ");
+        Position origin = Screen.ReadPosition().ToPosition();
+        Console.Write("Destination: ");
+        Position destination = Screen.ReadPosition().ToPosition();
+
+        match.makeMove(origin, destination); 
+    }
 
 }
 catch(BoardException exception)
