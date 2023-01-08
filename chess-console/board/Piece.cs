@@ -23,6 +23,8 @@ namespace board
             NumberOfMoves++;
         }
 
+
+        //verifies possible moves
         public bool IsTherePossibleMoves()
         {
             //receives the possible moves matrix from the piece
@@ -30,7 +32,7 @@ namespace board
             //searches the matrix for the true squares;
             for (int i = 0; i < this.Board.Rows; i++)
             {
-                for (int j = 0; i < this.Board.Columns; i++)
+                for (int j = 0; j < this.Board.Columns; j++)
                 {
                     if (matrix[i, j])
                     {

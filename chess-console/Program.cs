@@ -44,7 +44,7 @@ try
         }
         catch (BoardException e)
         {
-            Console.WriteLine(e.Message);
+            Console.WriteLine(e.Message); 
             Console.WriteLine("Press Enter to continue...");
             Console.ReadLine();
         }
