@@ -36,6 +36,8 @@ try
             //writes the house of destination
             Console.Write("Destination: ");
             Position destination = Screen.ReadPosition().ToPosition();
+            match.ValidateDestinationPosition(origin, destination);
+
             if (possibleMoves[destination.Row, destination.Column])
             {
                 //assigns the play, moves the piece and changes the player who plays

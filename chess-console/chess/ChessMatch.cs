@@ -40,26 +40,38 @@ namespace chess
         }
 
         //validates the chosen square to move a piece
-        public void ValidateOriginPosition(Position position) 
-        { 
-            if(this.Board.GetPiece(position) == null) //throws exception if there is no piece
+        public void ValidateOriginPosition(Position position)
+        {
+            if (this.Board.GetPiece(position) == null) //throws exception if there is no piece
             {
                 throw new BoardException("There is no piece at the chosen square.");
             }
-            if(this.ActualPlayer != this.Board.GetPiece(position).Color) //throws exception if the piece if the enemy's
+            if (this.ActualPlayer != this.Board.GetPiece(position).Color) //throws exception if the piece if the enemy's
             {
                 throw new BoardException("Can't move opponent's pieces!");
             }
-            if(!this.Board.GetPiece(position).IsTherePossibleMoves()) //throws exception if the piece can't move
+            if (!this.Board.GetPiece(position).IsTherePossibleMoves()) //throws exception if the piece can't move
             {
                 throw new BoardException("Can't move the piece. No possible moves.");
             }
         }
 
+        //valitades the destination square w.r.t to origin
+        //if invalid, will throw an exception on the BoardException
+        public void ValidateDestinationPosition(Position origin, Position destination)
+        {
+            //if the CANNOT move to the destination, throws an exception
+            if (!this.Board.GetPiece(origin).CanMove(destination))
+            {
+                throw new BoardException("Invalid Destination!");
+            }
+        }
+
+
         //changes the player who plays
         private void _ChangePlayer()
         {
-            if(ActualPlayer == Color.White) 
+            if (ActualPlayer == Color.White)
             {
                 this.ActualPlayer = Color.Black;
             }

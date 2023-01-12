@@ -43,6 +43,12 @@ namespace board
             return false;
         }
 
+        //returns true or false to the position of possible moves in the following position
+        //for the abstract method matrix
+        public bool CanMove(Position position)
+        {
+            return this.PossibleMoves()[position.Row, position.Column];
+        }
         /*
          * Method that moves a piece. It is abstract, so ChessPiece can implement it.
          * Since we don't know how a generic piece might move, we implement in this way.
