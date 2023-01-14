@@ -11,13 +11,17 @@ namespace chess
         public int Turn { get; private set; }
         public Color ActualPlayer { get; private set; }
         public bool MatchEnded { get; private set; }
-
+        private HashSet<Piece> pieces;
+        private HashSet<Piece> capturedPieces;
+        
         public ChessMatch()
         {
             Board = new Board(8, 8);
             Turn = 1;
             ActualPlayer = Color.White;
             MatchEnded = false;
+            pieces = new HashSet<Piece>(); //this stores ALL the pieces of the board
+            capturedPieces = new HashSet<Piece>(); //this stores the captures pieces
             StartBoard();
         }
 
@@ -26,9 +30,48 @@ namespace chess
 
             Piece piece = Board.RemovePiece(origin); //stores the piece of the origin position
             piece.IncrementNumberOfMoves();               //increments number of move of such piece
-            Board.RemovePiece(destination);         //stores and removes the piece of destination
+            //Board.RemovePiece(destination);         //stores and removes the piece of destination
             Piece capturedPiece = Board.RemovePiece(destination); //takes the piece from destination
             Board.SetPiece(piece, destination);    //sets the piece at origin to its destination
+
+            //if there's a piece in the destination, capture it then add to hashset of captured pieces
+            if( capturedPiece != null ) 
+            { 
+                //the captured pieces are mixed
+                capturedPieces.Add(capturedPiece);
+            }
+        }
+
+        //returns the captured pieces of the given color
+        public HashSet<Piece> CapturedPieces(Color color) {
+            HashSet<Piece> auxiliarSet = new HashSet<Piece>();
+            
+            //for each piece in captured pieces, adds it to auxiliar hashSet
+            foreach(Piece piece in capturedPieces)
+            {
+                if( piece.Color == color)
+                {
+                    auxiliarSet.Add(piece);
+                }
+            }
+            return auxiliarSet; 
+        }
+
+        public HashSet<Piece> PiecesAtPlay(Color color)
+        {
+            HashSet<Piece> auxiliarSet = new HashSet<Piece>();
+
+            //for each piece in captured pieces, adds it to auxiliar hashSet
+            foreach (Piece piece in pieces)
+            {
+                if (piece.Color == color)
+                {
+                    auxiliarSet.Add(piece);
+                }
+            }
+
+            auxiliarSet.ExceptWith(CapturedPieces(color)); //removes the captures pieces
+            return auxiliarSet; //returns the set without the captured pieces
         }
 
         //updated method to make a move of a piece, incrementing the turn and changing the player
@@ -82,28 +125,32 @@ namespace chess
 
         }
 
-        //puts the chess pieces into the board (manually)
+        //method to place a new piece in the board and populate the hashset
+        public void PlaceNewPiece(char column, int row, Piece piece)
+        {
+            this.Board.SetPiece(piece, new PositionChess(column, row).ToPosition());
+            pieces.Add(piece);
+        }
         private void StartBoard()
         {
             //White Pieces
-            Board.SetPiece(new Rook(Color.White, Board), new PositionChess('a', 1).ToPosition());
-            Board.SetPiece(new Knight(Color.White, Board), new PositionChess('b', 1).ToPosition());
-            Board.SetPiece(new Bishop(Color.White, Board), new PositionChess('c', 1).ToPosition());
-            Board.SetPiece(new Queen(Color.White, Board), new PositionChess('d', 1).ToPosition());
-            Board.SetPiece(new King(Color.White, Board), new PositionChess('e', 1).ToPosition());
-            Board.SetPiece(new Bishop(Color.White, Board), new PositionChess('f', 1).ToPosition());
-            Board.SetPiece(new Knight(Color.White, Board), new PositionChess('g', 1).ToPosition());
-            Board.SetPiece(new Rook(Color.White, Board), new PositionChess('h', 1).ToPosition());
+            PlaceNewPiece('a', 1, new Rook(Color.White, this.Board));
+            PlaceNewPiece('c', 1, new Rook(Color.White, this.Board));
+            PlaceNewPiece('d', 1, new Rook(Color.White, this.Board));
+            PlaceNewPiece('e', 1, new Rook(Color.White, this.Board));
+            PlaceNewPiece('a', 2, new Rook(Color.White, this.Board));
+            PlaceNewPiece('c', 2, new Rook(Color.White, this.Board));
+            PlaceNewPiece('d', 2, new Rook(Color.White, this.Board));
+            PlaceNewPiece('e', 2, new Rook(Color.White, this.Board));
+            PlaceNewPiece('e', 3, new Rook(Color.White, this.Board));
+            PlaceNewPiece('e', 4, new King(Color.White, this.Board));
 
-            //black pieces
-            Board.SetPiece(new Rook(Color.Black, Board), new PositionChess('a', 8).ToPosition());
-            Board.SetPiece(new Knight(Color.Black, Board), new PositionChess('b', 8).ToPosition());
-            Board.SetPiece(new Bishop(Color.Black, Board), new PositionChess('c', 8).ToPosition());
-            Board.SetPiece(new Queen(Color.Black, Board), new PositionChess('d', 8).ToPosition());
-            Board.SetPiece(new King(Color.Black, Board), new PositionChess('e', 8).ToPosition());
-            Board.SetPiece(new Bishop(Color.Black, Board), new PositionChess('f', 8).ToPosition());
-            Board.SetPiece(new Knight(Color.Black, Board), new PositionChess('g', 8).ToPosition());
-            Board.SetPiece(new Rook(Color.Black, Board), new PositionChess('h', 8).ToPosition());
+            //Back Pieces
+            PlaceNewPiece('a', 8, new Rook(Color.Black, this.Board));
+            PlaceNewPiece('c', 8, new Rook(Color.Black, this.Board));
+            PlaceNewPiece('d', 8, new Rook(Color.Black, this.Board));
+            PlaceNewPiece('e', 8, new Rook(Color.Black, this.Board));
+
 
 
         }

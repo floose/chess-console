@@ -5,8 +5,45 @@ using System.Runtime.CompilerServices;
 
 namespace chess_console
 {
+    //class with no constructor that only prints the board on the console
     internal class Screen
     {
+
+        public static void PrintMatch(ChessMatch match)
+        {
+            //prints initial board
+            Screen.PrintBoard(match.Board);
+            Console.WriteLine();
+            PrintCapturedPieces(match);
+            Console.WriteLine();
+            //Assigns the number of the turn
+            Console.WriteLine("Turn: " + match.Turn.ToString());
+            //Assigns the player
+            Console.WriteLine("Waiting play: " + match.ActualPlayer.ToString());
+        }
+
+        //prints the captured pieces 
+        public static void PrintCapturedPieces(ChessMatch match)
+        {
+            Console.WriteLine("Captured pieces");
+            Console.Write("White: "); 
+            PrintPieceSet(match.CapturedPieces(Color.White)); //prints white
+            Console.WriteLine();
+            Console.Write("Black: ");
+            PrintPieceSet(match.CapturedPieces(Color.Black)); //prints black
+        }
+
+        //prints a given set of pieces
+        public static void PrintPieceSet(HashSet<Piece> set)
+        {
+            Console.Write("[");
+            foreach(Piece piece in set)
+            {
+                Console.Write(piece + " ");
+            }
+            Console.Write("]");
+        }
+
         //displays the board at the console via matrix methods
         public static void PrintBoard(Board board)
         {
@@ -48,7 +85,7 @@ namespace chess_console
                     }
                     PrintPiece(board.GetPiece(i, j));
                     board.GetPiece(i, j);
-                } 
+                }
 
                 Console.WriteLine(); //makes a new line at the console for another row
             }

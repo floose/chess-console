@@ -14,14 +14,8 @@ try
         try
         {
             Console.Clear();
-            //prints initial board
-            Screen.PrintBoard(match.Board);
-            Console.WriteLine();
-            //Assigns the number of the turn
-            Console.WriteLine("Turn: " + match.Turn.ToString());
-            //Assigns the player
-            Console.WriteLine("Waiting play: " + match.ActualPlayer.ToString());
 
+            Screen.PrintMatch(match);
             Console.Write("Origin: ");
             //reads origin position from the console and transforms into generic position object
             Position origin = Screen.ReadPosition().ToPosition();
