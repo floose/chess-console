@@ -20,6 +20,10 @@ namespace chess_console
             Console.WriteLine("Turn: " + match.Turn.ToString());
             //Assigns the player
             Console.WriteLine("Waiting play: " + match.ActualPlayer.ToString());
+            if(match.checkFlag)
+            {
+                Console.WriteLine("CHECK!"); 
+            }
         }
 
         //prints the captured pieces 

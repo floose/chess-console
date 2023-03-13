@@ -14,18 +14,21 @@ namespace chess
         private HashSet<Piece> pieces;
         private HashSet<Piece> capturedPieces;
         
+        public bool checkFlag{get ; private set;}
+
         public ChessMatch()
         {
             Board = new Board(8, 8);
             Turn = 1;
             ActualPlayer = Color.White;
             MatchEnded = false;
+            checkFlag = false;
             pieces = new HashSet<Piece>(); //this stores ALL the pieces of the board
             capturedPieces = new HashSet<Piece>(); //this stores the captures pieces
             StartBoard();
         }
 
-        public void MakeMove(Position origin, Position destination)
+        public Piece MakeMove(Position origin, Position destination)
         {
 
             Piece piece = Board.RemovePiece(origin); //stores the piece of the origin position
@@ -37,13 +40,28 @@ namespace chess
             //if there's a piece in the destination, capture it then add to hashset of captured pieces
             if( capturedPiece != null ) 
             { 
-                //the captured pieces are mixed
+                //the captured piece is added to the captured pieces hashset
                 capturedPieces.Add(capturedPiece);
             }
+            return capturedPiece;
+        }
+
+        public void UndoMove(Position origin, Position destination, Piece capturedPiece)
+        {
+            Piece piece = this.Board.RemovePiece(destination);
+            piece.DecrementNumberOfMoves();
+
+            if(capturedPiece != null) //if there is a capture piece
+            {
+                this.Board.SetPiece(capturedPiece, destination); //sets captured piece back to position
+                this.capturedPieces.Remove(capturedPiece); //removes it from the set of captured pieces
+            }
+            this.Board.SetPiece(piece,origin); //sets the piece back to the board
         }
 
         //returns the captured pieces of the given color
-        public HashSet<Piece> CapturedPieces(Color color) {
+        public HashSet<Piece> CapturedPieces(Color color) 
+        {
             HashSet<Piece> auxiliarSet = new HashSet<Piece>();
             
             //for each piece in captured pieces, adds it to auxiliar hashSet
@@ -76,8 +94,24 @@ namespace chess
 
         //updated method to make a move of a piece, incrementing the turn and changing the player
         public void MakePlay(Position origin, Position destination)
-        {
-            MakeMove(origin, destination);
+        {   
+            Piece capturedPiece = MakeMove(origin,destination);
+            
+            if(IsKingInCheck(ActualPlayer))
+            {
+                UndoMove(origin,destination,capturedPiece);
+                throw new BoardException("You cannot put yourself in check!");
+            }
+
+            if(IsKingInCheck(_OponentColor(ActualPlayer)))
+            {
+                checkFlag = true;
+            }
+            else
+            {
+                checkFlag = false;
+            }
+
             this.Turn++;
             _ChangePlayer();
         }
@@ -110,6 +144,52 @@ namespace chess
             }
         }
 
+        private Piece _GetKing(Color color)
+        {
+            foreach(Piece x in PiecesAtPlay(color))
+            {
+                 if( x is King) //peca eh uma superclasse. Rei eh subclasse
+                 {
+                    return x;
+                 }
+            }
+            return null; //this is forbidden. But its there for a reason
+        }
+
+        public bool IsKingInCheck(Color color)
+        {
+            Piece king = _GetKing(color);
+
+            if(king == null) //throws exception if there's no king
+            {
+                throw new BoardException("There is no king of color" + color + "in the board!");
+            }
+
+            foreach(Piece x in PiecesAtPlay(_OponentColor(color))) //for each piece at play of the opponent color
+            {
+                if(x.IsTherePossibleMoves()) //check all pieces with possible moves
+                {
+                     bool[,] mat = x.PossibleMoves(); //get matrix of possible moves
+                     if(mat[king.Position.Row,king.Position.Column]) //if there is a possible move at the king's positions
+                     {
+                        return true;
+                     }
+                }
+            }
+            return false;
+        }
+
+        private Color _OponentColor(Color color)
+        {
+            if(color == Color.White)
+            {
+                return Color.Black;
+            }
+            else
+            {
+                return Color.White;
+            }
+        }
 
         //changes the player who plays
         private void _ChangePlayer()
@@ -125,6 +205,8 @@ namespace chess
 
         }
 
+
+        
         //method to place a new piece in the board and populate the hashset
         public void PlaceNewPiece(char column, int row, Piece piece)
         {
@@ -143,13 +225,14 @@ namespace chess
             PlaceNewPiece('d', 2, new Rook(Color.White, this.Board));
             PlaceNewPiece('e', 2, new Rook(Color.White, this.Board));
             PlaceNewPiece('e', 3, new Rook(Color.White, this.Board));
-            PlaceNewPiece('e', 4, new King(Color.White, this.Board));
+            PlaceNewPiece('b', 1, new King(Color.White, this.Board));
 
             //Back Pieces
             PlaceNewPiece('a', 8, new Rook(Color.Black, this.Board));
             PlaceNewPiece('c', 8, new Rook(Color.Black, this.Board));
             PlaceNewPiece('d', 8, new Rook(Color.Black, this.Board));
             PlaceNewPiece('e', 8, new Rook(Color.Black, this.Board));
+            PlaceNewPiece('h', 8, new King(Color.Black, this.Board));
 
 
 

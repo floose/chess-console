@@ -1,4 +1,5 @@
 ﻿using board.Enums;
+using exceptions;
 
 namespace board
 {
@@ -20,9 +21,19 @@ namespace board
 
         public void IncrementNumberOfMoves()
         {
-            NumberOfMoves++;
+            this.NumberOfMoves++;
         }
 
+        public void DecrementNumberOfMoves()
+        {
+            int temp = this.NumberOfMoves - 1;
+            if(temp < 0)
+            {
+                throw new BoardException("You cannot decrement moves from a piece that never moved before!");
+            }
+
+            this.NumberOfMoves--;
+        }
 
         //verifies possible moves
         public bool IsTherePossibleMoves()
