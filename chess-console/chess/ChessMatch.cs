@@ -112,8 +112,17 @@ namespace chess
                 checkFlag = false;
             }
 
-            this.Turn++;
-            _ChangePlayer();
+            if(TestCheckMate(_OponentColor(ActualPlayer)))
+            {
+                MatchEnded = true;
+            }
+            else
+            {
+
+                this.Turn++;
+                _ChangePlayer();
+            }          
+
         }
 
         //validates the chosen square to move a piece
@@ -177,6 +186,41 @@ namespace chess
                 }
             }
             return false;
+        }
+
+        public bool TestCheckMate(Color color)
+        {
+            if(!IsKingInCheck(color))
+            {
+                return false;
+            }
+            foreach(Piece x in PiecesAtPlay(color))
+            {
+                //gets possible moves of the pieces at play
+                bool[,] mat = x.PossibleMoves();{}
+
+                //sweeps the matrix of possible moves
+                for(int i = 0; i < this.Board.Rows; i++)
+                {
+                    for(int j = 0; j < this.Board.Columns; j++)
+                    {
+
+                        if(mat[i,j]) 
+                        {   
+                            Position destination = new Position(i,j);
+                            //tries to execute the movement of the piece
+                            Piece capturedPiece = MakeMove(x.Position,destination);
+                            bool checkFlag = IsKingInCheck(color);
+                            UndoMove(x.Position,destination,capturedPiece);
+                            if(!checkFlag)
+                            {
+                                return false;
+                            }
+                        }
+                    }
+                }
+            }
+            return true;
         }
 
         private Color _OponentColor(Color color)
