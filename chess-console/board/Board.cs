@@ -54,7 +54,7 @@ namespace board
             piece.Position = position; //updates piece position
         }
 
-        public Piece RemovePiece(Position position)
+        public Piece? RemovePiece(Position position)
         {
             //if there is no piece, returns null
             if(GetPiece(position) == null)

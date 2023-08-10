@@ -18,12 +18,24 @@ namespace chess_console
             Console.WriteLine();
             //Assigns the number of the turn
             Console.WriteLine("Turn: " + match.Turn.ToString());
-            //Assigns the player
-            Console.WriteLine("Waiting play: " + match.ActualPlayer.ToString());
-            if(match.checkFlag)
+            
+            //check if the match ended due to checkmate
+            if(!match.MatchEnded)
             {
-                Console.WriteLine("CHECK!"); 
+                //Assigns the player
+                Console.WriteLine("Waiting play: " + match.ActualPlayer.ToString());
+                if(match.checkFlag)
+                {
+                    Console.WriteLine("CHECK!"); 
+                }
             }
+            else
+            {
+                Console.WriteLine("CHECK MATE!");
+                Console.WriteLine("WINNER: " + match.ActualPlayer.ToString());
+                
+            }
+            
         }
 
         //prints the captured pieces 

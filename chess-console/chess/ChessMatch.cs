@@ -267,19 +267,12 @@ namespace chess
             PlaceNewPiece('a', 2, new Rook(Color.White, this.Board));
             PlaceNewPiece('c', 2, new Rook(Color.White, this.Board));
             PlaceNewPiece('d', 2, new Rook(Color.White, this.Board));
-            PlaceNewPiece('e', 2, new Rook(Color.White, this.Board));
-            PlaceNewPiece('e', 3, new Rook(Color.White, this.Board));
+            PlaceNewPiece('e', 7, new Rook(Color.White, this.Board));
+            PlaceNewPiece('g', 1, new Rook(Color.White, this.Board));
             PlaceNewPiece('b', 1, new King(Color.White, this.Board));
 
             //Back Pieces
-            PlaceNewPiece('a', 8, new Rook(Color.Black, this.Board));
-            PlaceNewPiece('c', 8, new Rook(Color.Black, this.Board));
-            PlaceNewPiece('d', 8, new Rook(Color.Black, this.Board));
-            PlaceNewPiece('e', 8, new Rook(Color.Black, this.Board));
             PlaceNewPiece('h', 8, new King(Color.Black, this.Board));
-
-
-
         }
 
 
