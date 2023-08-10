@@ -1,0 +1,6 @@
+to do:
+	- implement castling plays
+	- implement en passant play
+	- implement promotion play
+	- implement save board 
+	- implement load board after starting application
