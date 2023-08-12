@@ -9,7 +9,6 @@ namespace chess
         //constructor gives the board and color to inherited attributes
         public Rook(Color color, Board board) : base(color, board)
         {
-
         }
         public override string ToString()
         {

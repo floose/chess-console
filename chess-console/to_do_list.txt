@@ -1,6 +1,8 @@
 to do:
+	- implement knight, queen, pawn, bishop moves
 	- implement castling plays
 	- implement en passant play
 	- implement promotion play
 	- implement save board 
 	- implement load board after starting application
+	- implement help menu (optional)
