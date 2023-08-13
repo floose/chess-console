@@ -260,11 +260,13 @@ namespace chess
 private void StartBoard()
         {
             //White Pieces
-            PlaceNewPiece('a', 1, new Rook(Color.White, this.Board));
+            //PlaceNewPiece('a', 1, new Rook(Color.White, this.Board));
             PlaceNewPiece('e', 1, new King(Color.White, this.Board,this));
-            PlaceNewPiece('h', 1, new Rook(Color.White, this.Board));
+            //PlaceNewPiece('h', 1, new Rook(Color.White, this.Board));
             PlaceNewPiece('f', 1, new Bishop(Color.White, this.Board));
+            PlaceNewPiece('g', 1, new Knight(Color.White, this.Board));
             //White Pawns
+            
             /*
             PlaceNewPiece('a', 2, new Pawn(Color.White, this.Board));
             PlaceNewPiece('b', 2, new Pawn(Color.White, this.Board));
@@ -279,7 +281,7 @@ private void StartBoard()
             //Back Pieces
             PlaceNewPiece('a', 8, new Rook(Color.Black, this.Board));
             PlaceNewPiece('e', 8, new King(Color.Black, this.Board,this));
-            PlaceNewPiece('h', 8, new Rook(Color.Black, this.Board));
+            //PlaceNewPiece('h', 8, new Rook(Color.Black, this.Board));
             //Black Pawns
             /*
             PlaceNewPiece('a', 7, new Pawn(Color.Black, this.Board));
